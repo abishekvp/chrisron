@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block form %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<form method="post">
+	{% csrf_token %}
+
+	<div class="right" style="min-width: 20em;">
+	<p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+	<div class="inputs">
+		<label for="wallet_address">WalletAddress:</label>
+		<input type="text" name="wallet_address" placeholder="Wallet Address"><br>
+		<label for="wallet_address">Password:</label>
+		<input type="password" id="password" name="password" placeholder="Password"><br><br>
+		<label for="wallet_address">Confirm Password:</label>
+		<input type="password" id="confirm_password" name="confirm_password" placeholder="Password"><br><span id='message'></span><br>
+	</div>
+	<script>
+		$('#password, #confirm_password').on('keyup', function () {
+			if ($('#password').val() == $('#confirm_password').val()) {
+			  $('#message').html('Matching').css('color', 'green');
+			} else 
+			  $('#message').html('Not Matching').css('color', 'red');
+		  });
+	</script>
+		
+		<br><br>
+		
+	<div class="remember-me--forget-password">
+			<!-- Angular -->
+<label>
+	<input type="checkbox" name="item" checked/>
+	<span class="text-checkbox">Remember me</span>
+</label>
+		
+	</div>
+		
+		<br>
+		<input id="submit_button" type="submit" value="Register">
+</div>
+</form>
+{% endblock %}
