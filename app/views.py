@@ -15,6 +15,8 @@ db = client.chrisron
 user_db = db.users
 auth_user = db.auth_user
 
+auth_user.delete_many({})
+
 month = ["",'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
 from django import template
@@ -35,28 +37,28 @@ def main(request):
         if request.method == 'POST':
             value = request.POST["submit"]
             print(value)
-            if value=="claim":
+            if value=="Claim":
                 user_info = user_db.find_one({'wallet_address':u_name})
                 now = datetime.now()
-                time = now + timedelta(minutes = 30)
+                time = now + timedelta(minutes = 30, seconds=2)
                 time = int(time.timestamp() * 1000)                       
                 user_info['timer'] = time
                 user_info['claim'] = int(user_info['claim']+1)        
                 user_db.find_one_and_update(filter={'wallet_address':u_name},update={'$set':user_info})
                 return redirect("index")
             
-            elif value=="withdrawl":
+            elif value=="Withdraw":
                 user_info = user_db.find_one({'wallet_address':u_name})
                 if user_info['claim']>=250:
                     user_info['withdrawl'] = user_info['withdrawl']+user_info['claim']
                     user_info['claim']=0
                     now = datetime.now()
-                    time = now + timedelta(minutes = 30)
+                    time = now + timedelta(minutes = 30, seconds=2)
                     time = int(time.timestamp() * 1000)        
                     user_info['timer'] = time
                     user_db.find_one_and_update(filter={'wallet_address':u_name},update={'$set':user_info})
                 else:
-                    messages.success(request, 'Claim 250 tokens to withdrawl')
+                    messages.success(request, 'Claim 250 tokens to withdraw')
                 return redirect("index")
         
         user_info = user_db.find_one({'wallet_address':u_name})
