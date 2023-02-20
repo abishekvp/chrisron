@@ -13,20 +13,6 @@ from datetime import datetime, timedelta
 client = pymongo.MongoClient("mongodb+srv://abishekvp:" + quote_plus("Prabhason@mongodb")+ "@cluster0.x4ozo.mongodb.net/?retryWrites=true&w=majority", server_api=ServerApi('1'))
 db = client.chrisron
 user_db = db.users
-auth_user = db.auth_user
-
-auth_user.delete_many({})
-
-month = ["",'Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-
-from django import template
-
-register = template.Library()
-
-@register.filter
-def in_group(user, group_name):
-    return user.groups.filter(name=group_name).exists()
-
 
 def index(request):
     return render(request,'index.html')
@@ -49,7 +35,7 @@ def main(request):
             
             elif value=="Withdraw":
                 user_info = user_db.find_one({'wallet_address':u_name})
-                if user_info['claim']>=250:
+                if user_info['claim']>=150:
                     user_info['withdrawl'] = user_info['withdrawl']+user_info['claim']
                     user_info['claim']=0
                     now = datetime.now()
@@ -58,7 +44,7 @@ def main(request):
                     user_info['timer'] = time
                     user_db.find_one_and_update(filter={'wallet_address':u_name},update={'$set':user_info})
                 else:
-                    messages.success(request, 'Claim 250 tokens to withdraw')
+                    messages.success(request, 'Claim $150 dollars to withdraw')
                 return redirect("index")
         
         user_info = user_db.find_one({'wallet_address':u_name})
@@ -74,13 +60,13 @@ def user_register(request):
         wallet_address = request.POST["wallet_address"]
         passcode = request.POST["password"]
         now = datetime.now()
-        time = now + timedelta(minutes = 30, seconds = 20)
+        time = now + timedelta(minutes = 30, seconds = 2)
         time = int(time.timestamp() * 1000)
         User.objects.create_user(username = wallet_address, password = passcode)
         user_db.insert_one({'wallet_address':wallet_address, 'password':passcode, 'claim':0, 'withdrawl':0, 'timer':time})
         user = authenticate(request, username=wallet_address, password=passcode)
 
-        if user is not None:
+        if user:
             login(request=request, user=user)
             return redirect('index')
         else:
@@ -93,7 +79,7 @@ def user_login(request):
         wallet_address = request.POST["wallet_address"]
         passcode = request.POST["password"]
         print(wallet_address,passcode)
-        
+
         user = authenticate(request, username=wallet_address, password=passcode)
 
         if user is not None:
@@ -101,10 +87,9 @@ def user_login(request):
             return redirect('index')
         else:
             messages.success(request, 'user not found')
-        
 
     return render(request,'./registration/login.html')
-    
+
 
 def show(request):
     dic = list(user_db.find())

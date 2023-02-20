@@ -1,0 +1,10 @@
+Create folder "chrisron"
+inside "chrisron" create folder "main"
+inside folder "main" download project ( to download click the link https://github.com/abishekvp/chrisron/archive/refs/heads/master.zip )
+open command prompt in chrisron folder
+enter command "cd env/scripts"
+enter command "activate"
+enter command "cd.."
+enter command "cd../main"
+enter command "pip install -r requirements.txt"
+enter command "python manage.py runserver"
