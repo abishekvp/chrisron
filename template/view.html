@@ -6,11 +6,53 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chrisron User Details</title>
-    <style></style>
+    <style>
+        body{
+            font-family: 'Poppins',sans-serif;
+        }
+        p a{
+            position: fixed;
+            right: 5%;
+            top: 5%;
+        }
+        h1{
+            text-align: center;
+            margin: 10% 0 0 0;
+            font-size: 50px;
+        }
+        span{
+            margin: 2% 0 0 0;
+            font-weight: 700;
+            font-size: 20px;
+        }
+        table{
+            margin: 5% 0 0 0;
+            width: 60%;
+            margin-left: 20%;
+            margin-right: 20%;
+            border-collapse:collapse;
+        }
+        tr #address{
+            width: 20%;
+        }
+        tr th{
+            padding: 1%;
+            width: 15%;
+            border: 1px solid black;
+        }
+        tr td{
+            padding: 1%;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+    </style>
 </head>
 <body>
+    <h1>Chrisron</h1>
+    <center><span>User Details</span></center>
+    <p><a href="{% url 'logout' %}">Back to Login page</a></p>
     <div>
-        <p><a href="{% url 'logout' %}">Back to Login page</a></p>
         <table>
             <tr>
                 <th>Wallet Address</th>
@@ -19,7 +61,7 @@
             </tr>
             {% for i,j in data_dic.items %}
             <tr>
-                <td>
+                <td id="address">
                     {{i}}
                 </td>
                 <td>

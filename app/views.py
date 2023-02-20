@@ -22,7 +22,6 @@ def main(request):
         u_name = request.user.username
         if request.method == 'POST':
             value = request.POST["submit"]
-            print(value)
             if value=="Claim":
                 user_info = user_db.find_one({'wallet_address':u_name})
                 now = datetime.now()
@@ -78,7 +77,6 @@ def user_login(request):
     if request.method == 'POST':
         wallet_address = request.POST["wallet_address"]
         passcode = request.POST["password"]
-        print(wallet_address,passcode)
 
         user = authenticate(request, username=wallet_address, password=passcode)
 
@@ -97,7 +95,6 @@ def show(request):
     for i in dic:
         dic_v = {'claim':i['claim'],'withdrawl':i['withdrawl']}
         out_dic[i["wallet_address"]] = dic_v
-    print(out_dic)
 
     return render(request,"view.html",{'data_dic':out_dic})
 
