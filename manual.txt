@@ -2,6 +2,8 @@ Create folder "chrisron"
 inside "chrisron" create folder "main"
 inside folder "main" download project ( to download click the link https://github.com/abishekvp/chrisron/archive/refs/heads/master.zip )
 open command prompt in chrisron folder
+enter command "pip install virtualenv"
+enter command "python -m venv env"
 enter command "cd env/scripts"
 enter command "activate"
 enter command "cd.."
