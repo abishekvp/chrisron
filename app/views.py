@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from datetime import datetime, timedelta
 
-client = pymongo.MongoClient("mongodb+srv://abishekvp:" + quote_plus("Prabhason@mongodb")+ "@cluster0.x4ozo.mongodb.net/?retryWrites=true&w=majority", server_api=ServerApi('1'))
+client = pymongo.MongoClient("mongodb://localhost:27017", server_api=ServerApi('1'))
 db = client.chrisron
 user_db = db.users
 
